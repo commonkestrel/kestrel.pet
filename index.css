@@ -2,31 +2,108 @@ body {
     background-image: url("/background.png");
     background-repeat: repeat;
 
+    padding: 0;
+    margin: 0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .main {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    align-items: end;
     row-gap: 2rem;
     flex-wrap: wrap;
-    border: 4px #a200ff solid;
-    background-color: #fff7b4;
-    color: #5e0095;
-    font-family: Arial, Helvetica, sans-serif;
+    border: 4px #b8567a solid;
+    background-color: #fff9ed;
+    color: #b8567a;
+    font-family: "Yantramanav", sans-serif;
     padding: 2rem;
+    animation: ease-in on 150ms;
+}
+
+@keyframes on {
+    0% {
+        transform: scale(0%, 0%);
+    }
+
+    50% {
+        transform: scale(80%, 50%);
+    }
+
+    80% {
+        transform: scale(105%, 105%);
+    }
+
+    100% {
+        transform: scale(100%, 100%);
+    }
+}
+
+.modal {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    width: 75vw;
+    height: 50vh;
+    background-color: white;
+    border: 4px #b8567a solid;
+    box-shadow: 10px 10px #6e3349;
+}
+
+.modal > h1 {
+    position: absolute;
+    top: 20vh;
+    left: 5vw;
+    transform: rotate(-30deg);
+    font-family: "Comic Sans MS", "Comic Relief", cursive;;
+    color: black;
+    font-weight: 700;
+    -webkit-text-stroke: 1.5px white;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+button {
+    width: fit-content;
+    border: none;
+    padding: 0.25rem 2rem;
+    background-color: #b8567a;
+    color: white;
+    box-shadow: 4px 4px #6e3349;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: #6e3349;
+    color: white;
+    box-shadow: -4px -4px #b8567a;
 }
 
 .content-box {
-    border: 2px #000022 solid;
-    background-color: #eee;
+    overflow-y: scroll;
+    border: 3px #000022 solid;  
+    background-color: #ffffff;
     padding: 0.5rem;
+    padding-top: 0;
+    box-shadow: 4px 4px #6e3349;
+    transition: ease-out box-shadow 100ms;
+}
+
+.content-box:hover {
+    box-shadow: 7px 7px #6e3349;
 }
 
 .divider {
+    margin-bottom: 0.25rem;
     width: 95%;
     border-top: 1px #444 solid;
     border-bottom: 3px #444 dashed;
@@ -35,6 +112,7 @@ body {
 .navigation {
     display: flex;
     flex-direction: column;
+    height: fit-content;
 }
 
 .nav-link {
@@ -43,12 +121,77 @@ body {
 }
 
 .about {
+    height: fit-content;
     display: flex;
     flex-direction: column;
 }
 
 .about > p {
+    font-size: 1.1rem;
+}
+
+.about > p {
     color: blue;
+}
+
+.center {
+    text-align: center;
+}
+
+.feeling {
+    overflow: hidden;
+}
+
+.update {
+    border: 2px #b8567a solid;
+    display: flex;
+    flex-direction: row;
+    color: #000022;
+    justify-content: space-between;
+    padding-left: 0.25rem;
+    padding-right: 0.5rem;
+    margin-top: 1rem;
+}
+
+.update > p {
+    margin: 0.25rem;
+}
+
+.update > .time {
+    width: 20%;
+    color: #444;
+    text-align: right;
+}
+
+.people {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.badges {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.warnings {
+    align-items: center;
+    height: 40vh;
+    width: 50%;
+    overflow: hidden;
+}
+
+.warnings > .images {
+    display: inline-block;
+    overflow-y: scroll;
+}
+
+.warnings > .images > img {
+    width: 45%;
+    margin: 0;
+    image-rendering: pixelated;
 }
 
 @media (orientation: landscape) {
@@ -60,17 +203,47 @@ body {
 
     .navigation {
         width: 30%;
+        height: 50%;
     }
 
     .about {
         width: 60%;
+        height: 50%;
+    }
+
+    .status {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 60%;
+        height: 40%;
     }
 
     .updates {
-        width: 40%;
+        width: 100%;
+        height: 70%;
+    }
+
+    .feeling {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 2.5rem;
+        padding-bottom: 0;
+        column-gap: 0.5rem;
+    }
+
+    .feeling > h2 {
+        margin-right: 0.5rem;
+    }
+
+    .feeling > * {
+        margin: 0;
     }
 
     .people {
-        width: 50%;
+        width: 30%;
+        height: 37%;
     }
 }

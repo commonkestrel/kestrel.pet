@@ -3,30 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kestrel's corner</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Yantramanav:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="/index.css" rel="stylesheet">
-    <title>Document</title>
 </head>
 <body>
-    <div class="main">
-        <div class="content-box navigation">
-            <h2>NAVIGATION!</h2>
-            <div class="divider"></div>
-            <a class="nav-link" href="/about">ABOUT ME</a>
-            <a class="nav-link" href="/projects">PROJECTS</a>
-            <a class="nav-link" href="/art">SKETCHBOOK</a>
+    <div id="modal" class="modal">
+        <h1>kestrel's corner :D</h1>
+        <div class="flex-row">
+        <div class="warnings">
+            <h2>warning! this site has/is</h2>
+            <div class="images">
+                <img src="assets/images/colors.png" alt="flashing and colors" />
+                <img src="assets/images/javascript.png" alt="javascript" />
+                <img src="assets/images/madewithlove.png" alt="made with love" />
+                <img src="assets/images/colors.png" alt="flashing and colors" />
+                <img src="assets/images/javascript.png" alt="javascript" />
+                <img src="assets/images/madewithlove.png" alt="made with love" />
+            </div>
         </div>
-        <div class="content-box about">
-            <h2>ME!!</h2>
-            <div class="divider"></div>
-            <p>
-                i'm kestrel (they/it),
-                an 18 y/o bird with a passion for electrical engineering and CS.
-
-            </p>
-        </div>
-        <div class="content-box updates"></div>
-        <div class="content-box people"></div>
-        <div class=""></div>
     </div>
+        <button id="enter">enter!</button>
+    </div>
+    <script>
+        window.addEventListener("pageshow", () => {
+            document.getElementById("modal").style.animation = "";
+        })
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("enter").addEventListener("click", (ev) => {
+                document.getElementById("modal").style.animation = "on 150ms ease-out reverse both";
+                setTimeout(() => document.location.href = "/home.html", 200);
+            })
+        });
+    </script>
 </body>
 </html> 

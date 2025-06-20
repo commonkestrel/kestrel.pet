@@ -1,0 +1,16 @@
+{
+    "feeling": ["infatuated"],
+    "updates": [
+        { "message": "i'm finally adding a little status to here :D", "time": 1749537888 }
+    ],
+    "emotions": {
+        "happy": "yellow",
+        "loving": "yellow",
+        "infatuated": "yellow",
+        "sad": "blue",
+        "angry": "red",
+        "stressed": "red",
+        "calm": "green",
+        "relaxed": "green"
+    }
+}

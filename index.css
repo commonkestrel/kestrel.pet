@@ -64,12 +64,17 @@ body {
     font-family: "Comic Sans MS", "Comic Relief", cursive;;
     color: black;
     font-weight: 700;
-    -webkit-text-stroke: 1.5px white;
+    font-size: 3rem;
+    -webkit-text-stroke: 2.25px white;
 }
 
 .flex-row {
     display: flex;
     flex-direction: row;
+}
+
+.space-evenly {
+    justify-content: space-evenly;
 }
 
 button {
@@ -180,12 +185,11 @@ button:active {
     align-items: center;
     height: 40vh;
     width: 50%;
-    overflow: hidden;
+    overflow-y: scroll;
 }
 
 .warnings > .images {
     display: inline-block;
-    overflow-y: scroll;
 }
 
 .warnings > .images > img {

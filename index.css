@@ -8,6 +8,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: hidden;
 }
 
 .main {
@@ -44,7 +45,8 @@ body {
 }
 
 .modal {
-    padding: 2rem;
+    padding: 0;
+    padding-top: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -54,6 +56,7 @@ body {
     background-color: white;
     border: 4px #b8567a solid;
     box-shadow: 10px 10px #6e3349;
+    overflow: hidden;
 }
 
 .modal > h1 {
@@ -61,7 +64,7 @@ body {
     top: 20vh;
     left: 5vw;
     transform: rotate(-30deg);
-    font-family: "Comic Sans MS", "Comic Relief", cursive;;
+    font-family: "Comic Sans MS", "Comic Relief";
     color: black;
     font-weight: 700;
     font-size: 3rem;
@@ -179,6 +182,7 @@ button:active {
     flex-direction: row;
     width: 100%;
     justify-content: space-evenly;
+    flex-flow: row wrap;
 }
 
 .warnings {
@@ -198,16 +202,79 @@ button:active {
     image-rendering: pixelated;
 }
 
+.warning {
+    bottom: 0;
+    background-color: #FFCC00;
+    color: blue;
+    display: flex;
+    flex-direction: row;
+    column-gap: 5rem;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    padding-left: 5rem;
+    padding-right: 0rem;
+    height: 1.5rem;
+    animation: scroll 30s linear infinite;
+}
+
+.warning > p {
+    text-wrap: nowrap;
+}
+
+.warning-scroll {
+    background-color: #FFCC00;
+    align-self: self-start;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    flex-direction: row;
+    margin-top: 2rem;
+    height: 1.5rem;
+}
+
+.peek-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.peek {
+    position: relative;
+    transform: translateY(23.5%);
+}
+
+.badge {
+    image-rendering: pixelated;
+    margin: 0.1rem;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
 @media (orientation: landscape) {
     .main {
         width: 60vw;
         margin-top: 7rem;
-        margin-bottom: 7rem
+        margin-bottom: 7rem;
+        padding-top: 0;
+        max-height: calc(100vh - 14rem);
+        overflow-y: hidden;
     }
 
     .navigation {
-        width: 30%;
+        width: 100%;
         height: 50%;
+    }
+
+    .peek-container {
+        width: 30%;
     }
 
     .about {
@@ -219,7 +286,7 @@ button:active {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 60%;
+        width: 50%;
         height: 40%;
     }
 
@@ -247,7 +314,8 @@ button:active {
     }
 
     .people {
-        width: 30%;
-        height: 37%;
+        width: 40%;
+        height: 37%; 
+        max-height: calc(0.37 * (100vh - 14rem));
     }
 }

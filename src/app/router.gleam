@@ -19,7 +19,7 @@ pub fn handle_404(
   next: fn() -> Response,
 ) -> Response {
   case req.path {
-    "404.html" ->
+    "/404.html" ->
       response.Response(
         404,
         [#("content-type", "text/html; charset=utf-8")],

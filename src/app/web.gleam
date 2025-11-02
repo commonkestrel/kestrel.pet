@@ -20,9 +20,13 @@ pub fn middleware(
   use req <- wisp.handle_head(req)
   use req <- wisp.csrf_known_header_protection(req)
   use <- handle_404(req, ctx)
-  use <- wisp.serve_static(req, "/assets", ctx.assets_directory)
-  use <- wisp.serve_static(req, "/styles", ctx.styles_directory)
   use <- wisp.serve_static(req, "/", ctx.hypertext_directory)
+  use <- handle_statics(req, ctx)
+  use <- wisp.serve_static(req, "/assets", ctx.assets_directory)
 
   handle_request(req)
+}
+
+fn handle_statics(req: wisp.Request, ctx: Context, next: fn() -> wisp.Response) -> wisp.Response {
+    wisp.set_header(wisp.serve_static(req, "/styles", ctx.styles_directory, next), "Cache-control", "max-age=3600")
 }

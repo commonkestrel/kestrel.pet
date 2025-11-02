@@ -1,4 +1,4 @@
 #! /bin/bash
 
-gleam build
-cp ./build/dev/erlang/kestrel_pet ../passerine
+/home/linuxbrew/.linuxbrew/bin/gleam build
+cp -r ./build/dev/erlang/kestrel_pet ../passerine

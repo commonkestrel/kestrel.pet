@@ -21,4 +21,4 @@ jobs:
             cd kestrel.pet
             git pull
             /home/linuxbrew/.linuxbrew/bin/gleam export erlang-shipment
-            ${{ secrets.PASSWORD }} | sudo -S systemctl restart passerine.service
+            echo ${{ secrets.PASSWORD }} | sudo -S systemctl restart passerine.service

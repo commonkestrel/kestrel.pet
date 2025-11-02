@@ -28,6 +28,7 @@ pub fn main() -> Nil {
     |> mist.new
     |> mist.port(8000)
     |> mist.bind(ip)
+    |> mist.bind("localhost")
     |> mist.start
 
   process.sleep_forever()

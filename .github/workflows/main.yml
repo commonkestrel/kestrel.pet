@@ -18,7 +18,7 @@ jobs:
           username: kestrel
           password: ${{ secrets.PASSWORD }}
           script: |
-            eval "$(/home/linuxbrew/.linuxbrew/bin/brew/shellenv)"
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
             cd kestrel.pet
             git pull
             /home/linuxbrew/.linuxbrew/bin/gleam export erlang-shipment

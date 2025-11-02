@@ -1,3 +1,5 @@
+import gleam/io
+import gleam/string
 import gleamyshell
 import app/router
 import app/web
@@ -15,9 +17,11 @@ pub fn main() -> Nil {
   let handler = router.handle_request(_, ctx)
 
   let ip = case gleamyshell.execute("tailscale", ".", ["ip", "--4"]) {
-    Ok(gleamyshell.CommandOutput(0, ip)) -> ip
+    Ok(gleamyshell.CommandOutput(0, ip)) -> string.trim(ip)
     _ -> "localhost"
   }
+
+  io.println("ip: " <> ip)
 
   let assert Ok(_) =
     wisp_mist.handler(handler, secret_key_base)

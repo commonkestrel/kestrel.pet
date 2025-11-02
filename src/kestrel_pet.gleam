@@ -1,7 +1,6 @@
 import app/router
 import app/web
 import gleam/erlang/process
-import gleam/io
 import gleam/string
 import gleamyshell
 import mist

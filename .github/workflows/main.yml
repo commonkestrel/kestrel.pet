@@ -17,4 +17,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: kestrel
           password: ${{ secrets.PASSWORD }}
-          script: cd kestrel.pet && git pull && ./build.sh
+          script: |
+            cd kestrel.pet
+            git pull
+            /home/linuxbrew/.linuxbrew/bin/gleam export erlang-shipment
+            sudo systemctl restart passerine.service

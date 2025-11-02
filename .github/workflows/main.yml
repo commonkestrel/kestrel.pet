@@ -18,6 +18,7 @@ jobs:
           username: kestrel
           password: ${{ secrets.PASSWORD }}
           script: |
+            source .bashrc
             cd kestrel.pet
             git pull
             /home/linuxbrew/.linuxbrew/bin/gleam export erlang-shipment

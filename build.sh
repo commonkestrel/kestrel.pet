@@ -1,4 +1,4 @@
 #! /bin/bash
 
-/home/linuxbrew/.linuxbrew/bin/gleam build
-cp -r ./build/dev/erlang/kestrel_pet ../passerine
+/home/linuxbrew/.linuxbrew/bin/gleam export erlang-shipment
+systemctl restart passerine.service

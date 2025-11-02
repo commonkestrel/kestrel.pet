@@ -17,4 +17,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: kestrel
           password: ${{ secrets.PASSWORD }}
-          script: whoami
+          script: cd kestrel.pet && git pull

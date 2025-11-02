@@ -27,6 +27,14 @@ pub fn middleware(
   handle_request(req)
 }
 
-fn handle_statics(req: wisp.Request, ctx: Context, next: fn() -> wisp.Response) -> wisp.Response {
-    wisp.set_header(wisp.serve_static(req, "/styles", ctx.styles_directory, next), "Cache-control", "max-age=3600")
+fn handle_statics(
+  req: wisp.Request,
+  ctx: Context,
+  next: fn() -> wisp.Response,
+) -> wisp.Response {
+  wisp.set_header(
+    wisp.serve_static(req, "/styles", ctx.styles_directory, next),
+    "Cache-control",
+    "max-age=3600",
+  )
 }

@@ -11,6 +11,7 @@ pub type Context {
 pub fn middleware(
   req: wisp.Request,
   ctx: Context,
+  handle_404: fn(wisp.Request, Context, fn() -> wisp.Response) -> wisp.Response,
   handle_request: fn(wisp.Request) -> wisp.Response,
 ) -> wisp.Response {
   let req = wisp.method_override(req)
@@ -18,6 +19,7 @@ pub fn middleware(
   use <- wisp.rescue_crashes
   use req <- wisp.handle_head(req)
   use req <- wisp.csrf_known_header_protection(req)
+  use <- handle_404(req, ctx)
   use <- wisp.serve_static(req, "/assets", ctx.assets_directory)
   use <- wisp.serve_static(req, "/styles", ctx.styles_directory)
   use <- wisp.serve_static(req, "/", ctx.hypertext_directory)

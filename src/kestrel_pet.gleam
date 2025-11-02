@@ -17,7 +17,10 @@ pub fn main() -> Nil {
 
   let ip = case gleamyshell.execute("tailscale", ".", ["ip", "--4"]) {
     Ok(gleamyshell.CommandOutput(0, ip)) -> string.trim(ip)
-    _ -> "localhost"
+    _ -> {
+      wisp.log_critical("Failed to bind to tailscale IP, binding to localhost")
+      "localhost"
+    }
   }
 
   let assert Ok(_) =

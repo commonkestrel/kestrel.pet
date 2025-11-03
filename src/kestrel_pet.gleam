@@ -1,3 +1,4 @@
+import envoy
 import app/router
 import app/web
 import gleam/erlang/process
@@ -29,9 +30,13 @@ pub fn static_directories() -> web.Context {
   let styles = priv_directory <> "/styles"
   let hypertext = priv_directory <> "/hypertext"
 
+  let assert Ok(home) = envoy.get("HOME")
+  let passerine = home <> "/.passerine"
+
   web.Context(
     assets_directory: assets,
     styles_directory: styles,
     hypertext_directory: hypertext,
+    passerine_directory: passerine,
   )
 }

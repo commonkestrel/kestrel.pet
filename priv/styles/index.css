@@ -179,6 +179,13 @@ button:active {
 
 .badges {
     display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.badges > div {
+    margin-top: 0.5rem;
+    display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-evenly;
@@ -247,6 +254,16 @@ button:active {
 .badge {
     image-rendering: pixelated;
     margin: 0.1rem;
+}
+
+.button {
+    width: 88px;
+    height: 31px;
+}
+
+.blinky {
+    width: 150px;
+    height: 20px;
 }
 
 @keyframes scroll {

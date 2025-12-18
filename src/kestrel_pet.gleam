@@ -1,6 +1,6 @@
-import envoy
 import app/router
 import app/web
+import envoy
 import gleam/erlang/process
 import mist
 import wisp

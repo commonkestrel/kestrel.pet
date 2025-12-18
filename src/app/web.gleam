@@ -1,9 +1,9 @@
-import gleam/int
-import wisp
-import simplifile
-import gleam/string
-import gleam/list
 import gleam/dict
+import gleam/int
+import gleam/list
+import gleam/string
+import simplifile
+import wisp
 
 pub type Context {
   Context(
@@ -47,18 +47,20 @@ fn handle_statics(
 }
 
 fn handle_visitors(
-    req: wisp.Request,
-    ctx: Context,
-    next: fn() -> wisp.Response,
+  req: wisp.Request,
+  ctx: Context,
+  next: fn() -> wisp.Response,
 ) -> wisp.Response {
   case req.path {
     "/home.html" -> {
-      let visitor = case req.headers |> dict.from_list |> dict.get("x-forwarded-for") {
+      let visitor = case
+        req.headers |> dict.from_list |> dict.get("x-forwarded-for")
+      {
         Ok(v) -> v
         _ -> ""
       }
 
-      let visitors_path = ctx.passerine_directory <> "/visitors.txt"  
+      let visitors_path = ctx.passerine_directory <> "/visitors.txt"
       let visits_path = ctx.passerine_directory <> "/visits.txt"
       let assert Ok(visitors) = simplifile.read(visitors_path)
       let visitors = list.map(string.split(visitors, on: "\n"), string.trim)
@@ -66,15 +68,17 @@ fn handle_visitors(
       let assert Ok(_) = case list.contains(visitors, visitor) {
         False -> {
           wisp.log_debug("New visitor: " <> visitor)
-          let assert Ok(_) = {visitor <> "\n"} |> simplifile.append(to: visitors_path)
+          let assert Ok(_) =
+            { visitor <> "\n" } |> simplifile.append(to: visitors_path)
           let visits = list.length(visitors)
           wisp.log_info(string.inspect(req.headers))
           wisp.log_info(string.inspect(req.body))
-          let assert Ok(_) = int.to_string(visits) |> simplifile.write(to: visits_path)
+          let assert Ok(_) =
+            int.to_string(visits) |> simplifile.write(to: visits_path)
         }
         True -> Ok(Nil)
       }
-      
+
       next()
     }
     _ -> next()

@@ -4,6 +4,7 @@ import gleam/list
 import gleam/string
 import simplifile
 import wisp
+import templates/about
 
 pub type Context {
   Context(
@@ -27,6 +28,7 @@ pub fn middleware(
   use req <- wisp.csrf_known_header_protection(req)
   use <- handle_visitors(req, ctx)
   use <- handle_404(req, ctx)
+  use <- handle_hypertext(req)
   use <- wisp.serve_static(req, "/", ctx.hypertext_directory)
   use <- handle_statics(req, ctx)
   use <- wisp.serve_static(req, "/assets", ctx.assets_directory)
@@ -44,6 +46,18 @@ fn handle_statics(
     "Cache-control",
     "max-age=3600",
   )
+}
+
+fn handle_hypertext(
+  req: wisp.Request,
+  next: fn() -> wisp.Response,
+) -> wisp.Response {
+  let abouts = [["Hello 11", "Hello 12"], ["Hello 21", "Hello 22"]]
+
+  case req.path {
+    "/about.html" -> wisp.html_response(about.render(abouts), 200)
+    _ -> next()
+  }
 }
 
 fn handle_visitors(

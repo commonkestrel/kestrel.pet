@@ -22,7 +22,16 @@
 </head>
 <body>
     <div class="main">
-        
+        {> with big_list as List(List(String))
+        {% for list in big_list %}
+        <div class="content-box">
+            <ul>
+            {% for entry in list %}
+                <li>{{entry}}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html> 

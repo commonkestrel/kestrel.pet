@@ -1,6 +1,5 @@
-import gleam/int
 import gleam/float
-import gleam/time/calendar
+import gleam/int
 import gleam/time/duration
 import gleam/time/timestamp.{type Timestamp}
 
@@ -15,9 +14,9 @@ pub fn since(current: Timestamp) -> String {
 
   let years: Int = float.truncate(diff /. 3.154e7)
   let months = float.truncate(diff /. 2.628e6)
-  let days = float.truncate(diff /. 86400.)
-  let hours = float.truncate(diff /. {60. *. 60.})
-  let minutes = float.truncate(diff /. 60.)
+  let days = float.truncate(diff /. 86_400.0)
+  let hours = float.truncate(diff /. { 60.0 *. 60.0 })
+  let minutes = float.truncate(diff /. 60.0)
   let seconds = float.truncate(diff)
 
   case years {

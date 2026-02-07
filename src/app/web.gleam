@@ -3,7 +3,6 @@ import gleam/dict
 import gleam/int
 import gleam/list
 import gleam/string
-import gleam/time/calendar
 import simplifile
 import templates/about
 import templates/home
@@ -61,8 +60,7 @@ fn handle_hypertext(
 
   case req.path {
     "/about.html" -> wisp.html_response(about.render(abouts), 200)
-    "/home.html" ->
-      wisp.html_response(home.render(ctx.updates), 200)
+    "/home.html" -> wisp.html_response(home.render(ctx.updates), 200)
     _ -> next()
   }
 }

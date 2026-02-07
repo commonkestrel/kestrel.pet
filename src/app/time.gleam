@@ -10,7 +10,7 @@ pub type Timed(inner) {
 
 pub fn since(current: Timestamp) -> String {
   let system = timestamp.system_time()
-  let difference = timestamp.difference(system, current)
+  let difference = timestamp.difference(current, system)
   let diff = duration.to_seconds(difference)
 
   let years: Int = float.truncate(diff /. 3.154e7)

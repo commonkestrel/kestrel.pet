@@ -1,0 +1,5 @@
+#! /bin/bash
+
+COMMAND='s/updates:\ \[/updates:\ \[\n\      Timed("'"$1"'",\ timestamp.from_unix_seconds('"$(date +%s)"')),/'
+echo "$COMMAND"
+sed -i "$COMMAND" src/kestrel_pet.gleam

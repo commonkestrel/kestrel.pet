@@ -1,10 +1,13 @@
+import app/time.{type Timed}
 import gleam/dict
 import gleam/int
 import gleam/list
 import gleam/string
+import gleam/time/calendar
 import simplifile
-import wisp
 import templates/about
+import templates/home
+import wisp
 
 pub type Context {
   Context(
@@ -12,6 +15,7 @@ pub type Context {
     styles_directory: String,
     hypertext_directory: String,
     passerine_directory: String,
+    updates: List(Timed(String)),
   )
 }
 
@@ -28,7 +32,7 @@ pub fn middleware(
   use req <- wisp.csrf_known_header_protection(req)
   use <- handle_visitors(req, ctx)
   use <- handle_404(req, ctx)
-  use <- handle_hypertext(req)
+  use <- handle_hypertext(req, ctx)
   use <- wisp.serve_static(req, "/", ctx.hypertext_directory)
   use <- handle_statics(req, ctx)
   use <- wisp.serve_static(req, "/assets", ctx.assets_directory)
@@ -50,12 +54,15 @@ fn handle_statics(
 
 fn handle_hypertext(
   req: wisp.Request,
+  ctx: Context,
   next: fn() -> wisp.Response,
 ) -> wisp.Response {
   let abouts = [["Hello 11", "Hello 12"], ["Hello 21", "Hello 22"]]
 
   case req.path {
     "/about.html" -> wisp.html_response(about.render(abouts), 200)
+    "/home.html" ->
+      wisp.html_response(home.render(ctx.updates, calendar.local_offset()), 200)
     _ -> next()
   }
 }

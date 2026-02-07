@@ -58,16 +58,15 @@
             <div class="content-box updates">
                 {> import app/time.{since, type Timed}
                 {> import gleam/time/timestamp.{to_rfc3339}
-                {> import gleam/time/duration.{type Duration}
+                {> import gleam/time/calendar.{utc_offset}
                 {> with updates as List(Timed(String))
-                {> with offset as Duration
 
                 <h2>updates :3</h2>
                 <div class="divider"></div>
                 {% for update in updates %}
                     <div class="update">
                         <p class="message">{{ update.inner }}</p>
-                        <p class="time" title="{{ to_rfc3339(update.time, offset) }}">{{ since(update.time, offset) }}</p>
+                        <p class="time" title="{{ to_rfc3339(update.time, utc_offset) }}">{{ since(update.time) }}</p>
                     </div>
                 {% endfor %}
             </div>

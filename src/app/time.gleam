@@ -1,4 +1,5 @@
 import gleam/int
+import gleam/float
 import gleam/time/calendar
 import gleam/time/duration
 import gleam/time/timestamp.{type Timestamp}
@@ -7,18 +8,17 @@ pub type Timed(inner) {
   Timed(inner: inner, time: Timestamp)
 }
 
-pub fn since(current: Timestamp, offset: duration.Duration) -> String {
-  let system = timestamp.to_calendar(timestamp.system_time(), offset)
-  let current = timestamp.to_calendar(current, offset)
+pub fn since(current: Timestamp) -> String {
+  let system = timestamp.system_time()
+  let difference = timestamp.difference(system, current)
+  let diff = duration.to_seconds(difference)
 
-  let years = { current.0 }.year - { system.0 }.year
-  let months =
-    calendar.month_to_int({ current.0 }.month)
-    - calendar.month_to_int({ system.0 }.month)
-  let days = { current.0 }.day - { system.0 }.day
-  let hours = { current.1 }.hours - { system.1 }.hours
-  let minutes = { current.1 }.minutes - { system.1 }.minutes
-  let seconds = { current.1 }.seconds - { system.1 }.seconds
+  let years: Int = float.truncate(diff /. 3.154e7)
+  let months = float.truncate(diff /. 2.628e6)
+  let days = float.truncate(diff /. 86400.)
+  let hours = float.truncate(diff /. {60. *. 60.})
+  let minutes = float.truncate(diff /. 60.)
+  let seconds = float.truncate(diff)
 
   case years {
     _ if years > 0 -> int.to_string(years) <> " years ago"

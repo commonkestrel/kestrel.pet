@@ -67,8 +67,9 @@
         <div class="content-box people">
             <h2 class="center">cool people and blinkies :0</h2>
             <div class="divider"></div>
-            {> import app/config.{type Button}
+            {> import app/config.{type Button, type Blinkie}
             {> with buttons as List(Button)
+            {> with blinkies as List(Blinkie)
             <div class="badges">
                 <div>
                     {% for button in buttons %}
@@ -78,16 +79,9 @@
                     {% endfor %}
                 </div>
                 <div>
-                    <img class="badge blinky" src="assets/badges/flesh.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/gender.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/fashion.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/doggie.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/doggirl.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/birds.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/breakcore.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/pastel.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/trains.gif" alt="this flesh is a prison">
-                    <img class="badge blinky" src="assets/badges/stars.gif" alt="this flesh is a prison">
+                    {% for blinkie in blinkies %}
+                        <img class="badge blinkie" src="assets/badges/{{ blinkie.file }}" alt="{{ blinkie.alt }}">
+                    {% endfor %}
                 </div>
             </div>
             <h2 class="center">webrings :]</h2>

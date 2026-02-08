@@ -5,8 +5,6 @@ import app/web
 import envoy
 import gleam/dict
 import gleam/erlang/process
-import gleam/list
-import gleam/option
 import gleam/time/timestamp
 import mist
 import simplifile
@@ -51,7 +49,7 @@ pub fn static_directories() -> web.Context {
     _ -> dict.new()
   }
 
-  let config = parse_config(config_toml)
+  let config = config.parse(config_toml)
 
   web.Context(
     config,
@@ -74,32 +72,4 @@ pub fn static_directories() -> web.Context {
       ),
     ],
   )
-}
-
-fn parse_config(toml: dict.Dict(String, tom.Toml)) -> config.Config {
-  let buttons = case tom.get_array(toml, ["button"]) {
-    Ok(unmapped) -> {
-      list.filter_map(unmapped, tom.as_table)
-      |> list.filter_map(fn(button) {
-        let href = case tom.get_string(button, ["href"]) {
-          Ok(href) -> option.Some(href)
-          _ -> option.None
-        }
-
-        let alt = case tom.get_string(button, ["alt"]) {
-          Ok(alt) -> option.Some(alt)
-          _ -> option.None
-        }
-
-        case tom.get_string(button, ["file"]), tom.get_string(button, ["src"]) {
-          Ok(file), Error(_) -> Ok(config.Local(file, alt, href))
-          Error(_), Ok(src) -> Ok(config.Web(src, alt, href))
-          _, _ -> Error(0)
-        }
-      })
-    }
-    _ -> []
-  }
-
-  config.Config(buttons)
 }

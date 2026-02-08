@@ -63,7 +63,10 @@ fn handle_hypertext(
   case req.path {
     "/about.html" -> wisp.html_response(about.render(abouts), 200)
     "/home.html" ->
-      wisp.html_response(home.render(ctx.updates, ctx.config.buttons), 200)
+      wisp.html_response(
+        home.render(ctx.updates, ctx.config.buttons, ctx.config.blinkies),
+        200,
+      )
     _ -> next()
   }
 }

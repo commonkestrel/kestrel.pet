@@ -3,7 +3,7 @@
 import gleam/list
 import gleam/string_tree.{type StringTree}
 
-import app/config.{type Button}
+import app/config.{type Blinkie, type Button}
 import app/time.{type Timed, since}
 import gleam/time/calendar.{utc_offset}
 import gleam/time/timestamp.{to_rfc3339}
@@ -11,6 +11,7 @@ import gleam/time/timestamp.{to_rfc3339}
 pub fn render_tree(
   updates updates: List(Timed(String)),
   buttons buttons: List(Button),
+  blinkies blinkies: List(Blinkie),
 ) -> StringTree {
   let tree = string_tree.from_string("")
   let tree =
@@ -121,6 +122,7 @@ pub fn render_tree(
             ",
     )
   let tree = string_tree.append(tree, "            ")
+  let tree = string_tree.append(tree, "            ")
   let tree =
     string_tree.append(
       tree,
@@ -203,16 +205,32 @@ pub fn render_tree(
       "
                 </div>
                 <div>
-                    <img class=\"badge blinky\" src=\"assets/badges/flesh.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/gender.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/fashion.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/doggie.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/doggirl.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/birds.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/breakcore.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/pastel.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/trains.gif\" alt=\"this flesh is a prison\">
-                    <img class=\"badge blinky\" src=\"assets/badges/stars.gif\" alt=\"this flesh is a prison\">
+                    ",
+    )
+  let tree =
+    list.fold(blinkies, tree, fn(tree, blinkie) {
+      let tree =
+        string_tree.append(
+          tree,
+          "
+                        <img class=\"badge blinkie\" src=\"assets/badges/",
+        )
+      let tree = string_tree.append(tree, blinkie.file)
+      let tree = string_tree.append(tree, "\" alt=\"")
+      let tree = string_tree.append(tree, blinkie.alt)
+      let tree =
+        string_tree.append(
+          tree,
+          "\">
+                    ",
+        )
+
+      tree
+    })
+  let tree =
+    string_tree.append(
+      tree,
+      "
                 </div>
             </div>
             <h2 class=\"center\">webrings :]</h2>
@@ -254,6 +272,11 @@ pub fn render_tree(
 pub fn render(
   updates updates: List(Timed(String)),
   buttons buttons: List(Button),
+  blinkies blinkies: List(Blinkie),
 ) -> String {
-  string_tree.to_string(render_tree(updates: updates, buttons: buttons))
+  string_tree.to_string(render_tree(
+    updates: updates,
+    buttons: buttons,
+    blinkies: blinkies,
+  ))
 }

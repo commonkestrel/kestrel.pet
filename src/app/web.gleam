@@ -1,5 +1,4 @@
 import app/config
-import app/time.{type Timed}
 import gleam/dict
 import gleam/int
 import gleam/list
@@ -16,7 +15,6 @@ pub type Context {
     styles_directory: String,
     hypertext_directory: String,
     passerine_directory: String,
-    updates: List(Timed(String)),
   )
 }
 
@@ -64,7 +62,7 @@ fn handle_hypertext(
     "/about.html" -> wisp.html_response(about.render(abouts), 200)
     "/home.html" ->
       wisp.html_response(
-        home.render(ctx.updates, ctx.config.buttons, ctx.config.blinkies),
+        home.render(ctx.config.updates, ctx.config.buttons, ctx.config.blinkies),
         200,
       )
     _ -> next()

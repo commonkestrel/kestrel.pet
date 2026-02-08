@@ -1,11 +1,9 @@
 import app/config
 import app/router
-import app/time.{Timed}
 import app/web
 import envoy
 import gleam/dict
 import gleam/erlang/process
-import gleam/time/timestamp
 import mist
 import simplifile
 import tom
@@ -57,19 +55,5 @@ pub fn static_directories() -> web.Context {
     styles_directory: styles,
     hypertext_directory: hypertext,
     passerine_directory: passerine,
-    updates: [
-      Timed(
-        "might have fixed the timestamps for these :p",
-        timestamp.from_unix_seconds(1_770_427_013),
-      ),
-      Timed(
-        "i'm finally adding a little status to here :D",
-        timestamp.from_unix_seconds(1_749_501_300),
-      ),
-      Timed(
-        "worker bee building a little website :3",
-        timestamp.from_unix_seconds(1_749_069_300),
-      ),
-    ],
   )
 }

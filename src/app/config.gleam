@@ -1,3 +1,4 @@
+import app/time
 import gleam/dict
 import gleam/list
 import gleam/option
@@ -5,7 +6,11 @@ import tom
 import wisp
 
 pub type Config {
-  Config(buttons: List(Button), blinkies: List(Blinkie))
+  Config(
+    buttons: List(Button),
+    blinkies: List(Blinkie),
+    updates: List(time.Timed(String)),
+  )
 }
 
 pub fn parse(toml: dict.Dict(String, tom.Toml)) -> Config {
@@ -63,7 +68,33 @@ pub fn parse(toml: dict.Dict(String, tom.Toml)) -> Config {
     _ -> []
   }
 
-  Config(buttons, blinkies)
+  let updates = case tom.get_array(toml, ["update"]) {
+    Ok(unmapped) -> {
+      list.filter_map(unmapped, tom.as_table)
+      |> list.filter_map(fn(update) {
+        case tom.get_string(update, ["content"]) {
+          Ok(content) ->
+            case tom.get_timestamp(update, ["timestamp"]) {
+              Ok(timestamp) -> Ok(time.Timed(content, timestamp))
+              _ -> {
+                wisp.log_error("update found without timestamp")
+                Error(0)
+              }
+            }
+          _ -> {
+            wisp.log_error("update found without content")
+            Error(0)
+          }
+        }
+      })
+    }
+    _ -> {
+      wisp.log_warning("updates not found in Config.toml")
+      []
+    }
+  }
+
+  Config(buttons, blinkies, updates)
 }
 
 pub type Blinkie {

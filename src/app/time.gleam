@@ -20,11 +20,16 @@ pub fn since(current: Timestamp) -> String {
   let seconds = float.truncate(diff)
 
   case years {
-    _ if years > 0 -> int.to_string(years) <> " years ago"
-    _ if months > 0 -> int.to_string(months) <> " months ago"
-    _ if days > 0 -> int.to_string(days) <> " days ago"
-    _ if hours > 0 -> int.to_string(hours) <> " hours ago"
-    _ if minutes > 0 -> int.to_string(minutes) <> " minutes ago"
+    _ if years == 1 -> int.to_string(years) <> " year ago"
+    _ if years > 1 -> int.to_string(years) <> " years ago"
+    _ if months == 1 -> int.to_string(months) <> " month ago"
+    _ if months > 1 -> int.to_string(months) <> " months ago"
+    _ if days == 1 -> int.to_string(days) <> " day ago"
+    _ if days > 1 -> int.to_string(days) <> " days ago"
+    _ if hours == 1 -> int.to_string(hours) <> " hour ago"
+    _ if hours > 1 -> int.to_string(hours) <> " hours ago"
+    _ if minutes == 1 -> int.to_string(minutes) <> " minute ago"
+    _ if minutes > 1 -> int.to_string(minutes) <> " minutes ago"
     _ -> int.to_string(seconds) <> " seconds ago"
   }
 }

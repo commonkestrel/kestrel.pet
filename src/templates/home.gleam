@@ -3,11 +3,15 @@
 import gleam/list
 import gleam/string_tree.{type StringTree}
 
+import app/config.{type Button}
 import app/time.{type Timed, since}
 import gleam/time/calendar.{utc_offset}
 import gleam/time/timestamp.{to_rfc3339}
 
-pub fn render_tree(updates updates: List(Timed(String))) -> StringTree {
+pub fn render_tree(
+  updates updates: List(Timed(String)),
+  buttons buttons: List(Button),
+) -> StringTree {
   let tree = string_tree.from_string("")
   let tree =
     string_tree.append(
@@ -63,25 +67,19 @@ pub fn render_tree(updates updates: List(Timed(String))) -> StringTree {
                 and love for silly personal websites :3
             </p>
         </div>
-        <div class=\"status\">
-            <div class=\"content-box feeling\">
-                <h2>i'm feeling...</h2>
-                <img src=\"assets/icons/yellow.png\">
-                <p>infatuated</p>
-            </div>
-            <div class=\"content-box updates\">
-                ",
+        <div class=\"content-box updates\">
+            ",
     )
-  let tree = string_tree.append(tree, "                ")
-  let tree = string_tree.append(tree, "                ")
-  let tree = string_tree.append(tree, "                ")
+  let tree = string_tree.append(tree, "            ")
+  let tree = string_tree.append(tree, "            ")
+  let tree = string_tree.append(tree, "            ")
   let tree =
     string_tree.append(
       tree,
       "
-                <h2>updates :3</h2>
-                <div class=\"divider\"></div>
-                ",
+            <h2>updates :3</h2>
+            <div class=\"divider\"></div>
+            ",
     )
   let tree =
     list.fold(updates, tree, fn(tree, update) {
@@ -89,15 +87,15 @@ pub fn render_tree(updates updates: List(Timed(String))) -> StringTree {
         string_tree.append(
           tree,
           "
-                    <div class=\"update\">
-                        <p class=\"message\">",
+                <div class=\"update\">
+                    <p class=\"message\">",
         )
       let tree = string_tree.append(tree, update.inner)
       let tree =
         string_tree.append(
           tree,
           "</p>
-                        <p class=\"time\" title=\"",
+                    <p class=\"time\" title=\"",
         )
       let tree = string_tree.append(tree, to_rfc3339(update.time, utc_offset))
       let tree = string_tree.append(tree, "\">")
@@ -106,8 +104,8 @@ pub fn render_tree(updates updates: List(Timed(String))) -> StringTree {
         string_tree.append(
           tree,
           "</p>
-                    </div>
-                ",
+                </div>
+            ",
         )
 
       tree
@@ -116,43 +114,93 @@ pub fn render_tree(updates updates: List(Timed(String))) -> StringTree {
     string_tree.append(
       tree,
       "
-            </div>
         </div>
         <div class=\"content-box people\">
             <h2 class=\"center\">cool people and blinkies :0</h2>
             <div class=\"divider\"></div>
-            <div class=\"badges\">
+            ",
+    )
+  let tree = string_tree.append(tree, "            ")
+  let tree =
+    string_tree.append(
+      tree,
+      "            <div class=\"badges\">
                 <div>
-                    <a class=\"center\" href=\"https://kestrel.pet\" target=\"_blank\">
-                        <img class=\"badge button\" src=\"assets/badges/kestrel.gif\" alt=\"kestrel.pet\">
-                    </a>
-                    <a class=\"center\" href=\"https://lily.pet\" target=\"_blank\">
-                        <img class=\"badge button\" src=\"assets/badges/lily_pet.gif\" alt=\"lily.pet\">
-                    </a>
-                    <a href=\"https://badge.les.bi\"><img title=\"poly trans\" class=\"badge button\" src=\"https://badge.les.bi/88x31/poly/trans/half/outset-invert.png\"></a>
-                    <a class=\"center\" href=\"https://frame.work\" target=\"_blank\">
-                        <img class=\"badge button\" src=\"assets/badges/framework.png\" alt=\"framework\">
-                    </a>
-                    <a class=\"center\" href=\"https://firefox.com\" target=\"_blank\">
-                        <img class=\"badge button\" src=\"assets/badges/firefox.gif\" alt=\"firefox\">
-                    </a>
-                    <img class=\"badge button\" src=\"assets/badges/bart.gif\" alt=\"bay area rapid transit (BART)\">
-                    <img class=\"badge button\" src=\"assets/badges/rtr.png\" alt=\"right to repair\">
-                    <img class=\"badge button\" src=\"assets/badges/trans.webp\" alt=\"transgender\">
-                    <img class=\"badge button\" src=\"assets/badges/transrights.png\" alt=\"trans rights\">
-                    <a class=\"center\" href=\"https://ebird.org\" target=\"_blank\">
-                        <img class=\"badge button\" src=\"assets/badges/ebird.png\" alt=\"ebird\">
-                    </a>
-                    <img class=\"badge button\" src=\"assets/badges/paws.png\" alt=\"made with my own two paws\">
-                    <img class=\"badge button\" src=\"assets/badges/rust.gif\" alt=\"rust\">
-                    <img class=\"badge button\" src=\"assets/badges/pebber.gif\" alt=\"powered by dr pepper\">
-                    <img class=\"badge button\" src=\"assets/badges/transit.png\" alt=\"transit enthusiast\">
-                    <a class=\"center\" href=\"https://femtanyl.bandcamp.com/\">
-                        <img class=\"badge button\" src=\"assets/badges/femtanyl.png\" alt=\"femtanyl\">
-                    </a>
-                    <img class=\"badge button\" src=\"assets/badges/linux.gif\" alt=\"made with gnu/linux\">
-                    <img class=\"badge button\" src=\"assets/badges/estrogen.gif\" alt=\"powered by estrogen\">
-                    <img class=\"badge button\" src=\"assets/badges/noai.gif\" alt=\"no AI allowed!\">
+                    ",
+    )
+  let tree =
+    list.fold(buttons, tree, fn(tree, button) {
+      let tree =
+        string_tree.append(
+          tree,
+          "
+                        ",
+        )
+      let tree = case config.has_href(button) {
+        True -> {
+          let tree = string_tree.append(tree, "<a class=\"center\" href=\"")
+          let tree = string_tree.append(tree, config.href(button))
+          let tree = string_tree.append(tree, "\" target=\"_blank\">")
+
+          tree
+        }
+        False -> {
+          tree
+        }
+      }
+      let tree =
+        string_tree.append(
+          tree,
+          "
+                            <img class=\"badge button\" ",
+        )
+      let tree = case config.is_local(button) {
+        True -> {
+          let tree = string_tree.append(tree, "src=\"assets/badges/")
+          let tree = string_tree.append(tree, config.source(button))
+          let tree = string_tree.append(tree, "\"")
+
+          tree
+        }
+        False -> {
+          let tree = string_tree.append(tree, " src=\"")
+          let tree = string_tree.append(tree, config.source(button))
+          let tree = string_tree.append(tree, "\"")
+
+          tree
+        }
+      }
+      let tree = string_tree.append(tree, " alt=\"")
+      let tree = string_tree.append(tree, config.alt(button))
+      let tree =
+        string_tree.append(
+          tree,
+          "\">
+                        ",
+        )
+      let tree = case config.has_href(button) {
+        True -> {
+          let tree = string_tree.append(tree, "</a>")
+
+          tree
+        }
+        False -> {
+          tree
+        }
+      }
+      let tree =
+        string_tree.append(
+          tree,
+          "
+                    ",
+        )
+
+      tree
+    })
+  let tree =
+    string_tree.append(
+      tree,
+      "
                 </div>
                 <div>
                     <img class=\"badge blinky\" src=\"assets/badges/flesh.gif\" alt=\"this flesh is a prison\">
@@ -203,6 +251,9 @@ pub fn render_tree(updates updates: List(Timed(String))) -> StringTree {
   tree
 }
 
-pub fn render(updates updates: List(Timed(String))) -> String {
-  string_tree.to_string(render_tree(updates: updates))
+pub fn render(
+  updates updates: List(Timed(String)),
+  buttons buttons: List(Button),
+) -> String {
+  string_tree.to_string(render_tree(updates: updates, buttons: buttons))
 }

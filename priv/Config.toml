@@ -1,0 +1,79 @@
+[[button]]
+file = "kestrel.gif"
+alt = "kestrel.pet"
+href = "https://kestrel.pet"
+
+[[button]]
+file = "lily_pet.gif"
+alt = "lily.pet"
+href = "https://lily.pet"
+
+[[button]]
+file = "bart.gif"
+alt = "bay area rapid transit (BART)"
+href = "https://bart.gov"
+
+[[button]]
+src = "https://badge.les.bi/88x31/bi/trans/half/outset-invert.png"
+alt = "bi trans"
+href = "https://badge.les.bi"
+
+[[button]]
+file = "framework.png"
+alt = "framework"
+href = "https://frame.work"
+
+[[button]]
+file = "firefox.gif"
+alt = "firefox"
+href = "https://firefox.com"
+
+[[button]]
+file = "rtr.png"
+alt = "right to repair"
+
+[[button]]
+file = "trans.webp"
+alt = "transgender"
+
+[[button]]
+file = "transrights.png"
+alt = "trans rights!"
+
+[[button]]
+file = "ebird.png"
+alt = "ebird"
+href = "https://ebird.org"
+
+[[button]]
+file = "paws.png"
+alt = "made with my own two paws"
+
+[[button]]
+file = "rust.gif"
+alt = "rust"
+
+[[button]]
+file = "pebber.gif"
+alt = "powered by dr pepper"
+
+[[button]]
+file = "transit.png"
+alt = "transit enthusiast"
+
+[[button]]
+file = "femtanyl.png"
+alt = "femtanyl"
+href = "https://femtanyl.bandcamp.com"
+
+[[button]]
+file = "linux.gif"
+alt = "made with gnu/linux"
+
+[[button]]
+file = "estrogen.gif"
+href = "powered by estrogen"
+
+[[button]]
+file = "noai.gif"
+alt = "no AI allowed!"

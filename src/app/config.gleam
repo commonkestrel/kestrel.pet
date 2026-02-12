@@ -1,7 +1,7 @@
 import app/time
 import gleam/dict.{type Dict}
 import gleam/list
-import gleam/option.{then, None, Some, type Option}
+import gleam/option.{type Option, None, Some, then}
 import gleam/result.{map_error, try, unwrap}
 import gleam/time/calendar
 import mork
@@ -207,7 +207,9 @@ fn parse_server(toml: dict.Dict(String, tom.Toml)) -> Option(#(String, Int)) {
   use address <- then(case tom.get_string(toml, ["server", "address"]) {
     Ok(address) -> Some(address)
     Error(_) -> {
-      wisp.log_error("address not provided in `Config.toml`; hosting on `localhost:8001`")
+      wisp.log_error(
+        "address not provided in `Config.toml`; hosting on `localhost:8001`",
+      )
       None
     }
   })
@@ -215,7 +217,9 @@ fn parse_server(toml: dict.Dict(String, tom.Toml)) -> Option(#(String, Int)) {
   use port <- then(case tom.get_int(toml, ["server", "port"]) {
     Ok(port) -> Some(port)
     Error(_) -> {
-      wisp.log_error("port not provided in `Config.toml`; hosting on `localhost:8001`")
+      wisp.log_error(
+        "port not provided in `Config.toml`; hosting on `localhost:8001`",
+      )
       None
     }
   })

@@ -21,8 +21,8 @@ pub fn main() -> Nil {
   let assert Ok(_) =
     wisp_mist.handler(handler, secret_key_base)
     |> mist.new
-    |> mist.port(8000)
-    |> mist.bind("localhost")
+    |> mist.port(ctx.config.port)
+    |> mist.bind(ctx.config.address)
     |> mist.start
 
   process.sleep_forever()

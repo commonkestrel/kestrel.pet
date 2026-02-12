@@ -22,7 +22,8 @@ pub type Config {
 }
 
 pub fn parse(toml: dict.Dict(String, tom.Toml), priv: String) -> Config {
-  let #(address, port) = parse_server(toml)
+  // Default to the dev port
+  let #(address, port) = option.unwrap(parse_server(toml), #("localhost", 8001))
 
   let buttons = case tom.get_array(toml, ["button"]) {
     Ok(unmapped) -> {
@@ -202,8 +203,24 @@ pub fn parse(toml: dict.Dict(String, tom.Toml), priv: String) -> Config {
   Config(address, port, buttons, blogs, blinkies, updates, tags)
 }
 
-fn parse_server(toml: dict.Dict(String, tom.Toml)) -> #(String, Int) {
-  
+fn parse_server(toml: dict.Dict(String, tom.Toml)) -> Option(#(String, Int)) {
+  use address <- then(case tom.get_string(toml, ["server", "address"]) {
+    Ok(address) -> Some(address)
+    Error(_) -> {
+      wisp.log_error("address not provided in `Config.toml`; hosting on `localhost:8001`")
+      None
+    }
+  })
+
+  use port <- then(case tom.get_int(toml, ["server", "port"]) {
+    Ok(port) -> Some(port)
+    Error(_) -> {
+      wisp.log_error("port not provided in `Config.toml`; hosting on `localhost:8001`")
+      None
+    }
+  })
+
+  Some(#(address, port))
 }
 
 pub type Blinkie {

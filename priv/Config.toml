@@ -1,3 +1,7 @@
+[server]
+address = "localhost"
+port = 8001
+
 # ------------------- Short updates here ------------------- #
 
 [[update]]

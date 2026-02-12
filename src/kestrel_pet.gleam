@@ -47,7 +47,7 @@ pub fn static_directories() -> web.Context {
     _ -> dict.new()
   }
 
-  let config = config.parse(config_toml)
+  let config = config.parse(config_toml, priv_directory)
 
   web.Context(
     config,

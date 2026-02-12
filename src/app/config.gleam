@@ -1,19 +1,29 @@
 import app/time
-import gleam/dict
+import gleam/dict.{type Dict}
 import gleam/list
-import gleam/option
+import gleam/option.{then, None, Some, type Option}
+import gleam/result.{map_error, try, unwrap}
+import gleam/time/calendar
+import mork
+import simplifile
 import tom
 import wisp
 
 pub type Config {
   Config(
+    address: String,
+    port: Int,
     buttons: List(Button),
+    blogs: Dict(String, Blog),
     blinkies: List(Blinkie),
     updates: List(time.Timed(String)),
+    tags: Dict(String, List(Blog)),
   )
 }
 
-pub fn parse(toml: dict.Dict(String, tom.Toml)) -> Config {
+pub fn parse(toml: dict.Dict(String, tom.Toml), priv: String) -> Config {
+  let #(address, port) = parse_server(toml)
+
   let buttons = case tom.get_array(toml, ["button"]) {
     Ok(unmapped) -> {
       list.filter_map(unmapped, tom.as_table)
@@ -94,7 +104,106 @@ pub fn parse(toml: dict.Dict(String, tom.Toml)) -> Config {
     }
   }
 
-  Config(buttons, blinkies, updates)
+  let blogs = case tom.get_array(toml, ["blog"]) {
+    Ok(unmapped) -> {
+      let mapped =
+        list.filter_map(unmapped, fn(blog) {
+          tom.as_table(blog)
+          |> result.map_error(fn(err) {
+            wisp.log_warning("blog not of type `table`; skipping")
+            err
+          })
+        })
+
+      list.filter_map(mapped, fn(blog) {
+        use title <- try(
+          tom.get_string(blog, ["title"])
+          |> map_error(fn(err) {
+            wisp.log_warning("blog found without title; skipping")
+            err
+          }),
+        )
+
+        use description <- try(
+          tom.get_string(blog, ["description"])
+          |> map_error(fn(err) {
+            wisp.log_warning("blog found without description; skipping")
+            err
+          }),
+        )
+
+        use image <- try(
+          tom.get_string(blog, ["image"])
+          |> map_error(fn(err) {
+            wisp.log_warning("blog found without image; skipping")
+            err
+          }),
+        )
+
+        let unmapped_tags = tom.get_array(blog, ["tags"]) |> unwrap([])
+        let tags =
+          list.filter_map(unmapped_tags, fn(tag) {
+            tom.as_string(tag)
+            |> map_error(fn(err) {
+              wisp.log_warning("tag of type other than string; skipping")
+              err
+            })
+          })
+
+        use date <- try(
+          tom.get_date(blog, ["date"])
+          |> map_error(fn(err) {
+            wisp.log_warning("blog found without image; skipping")
+            err
+          }),
+        )
+
+        use file <- try(
+          tom.get_string(blog, ["file"])
+          |> map_error(fn(err) {
+            wisp.log_warning("blog found without file; skipping")
+            err
+          }),
+        )
+
+        // Yes mapping the error like this is stupid but it's `filter_map`, it's not like it cares
+        use markdown <- try(
+          simplifile.read(priv <> "/blogs/" <> file)
+          |> map_error(fn(_) { tom.NotFound(["file"]) }),
+        )
+
+        let html =
+          mork.parse(markdown)
+          |> mork.to_html
+
+        Ok(#(file, Blog(title, description, image, tags, date, html)))
+      })
+      |> dict.from_list
+    }
+    _ -> {
+      wisp.log_warning("blogs not found in Config.toml")
+      dict.new()
+    }
+  }
+
+  let tags =
+    dict.values(blogs)
+    |> list.fold(dict.new(), fn(tags, blog) {
+      list.fold(blog.tags, tags, fn(tags, tag) {
+        dict.upsert(tags, tag, fn(tag_list) {
+          case tag_list {
+            Some(tag_list) -> list.prepend(tag_list, blog)
+            None -> [blog]
+          }
+        })
+      })
+    })
+
+  Config(address, port, buttons, blogs, blinkies, updates, tags)
+}
+
+fn parse_server(toml: dict.Dict(String, tom.Toml)) -> #(String, Int) {
+  
 }
 
 pub type Blinkie {
@@ -146,4 +255,15 @@ pub fn href(button: Button) -> String {
     Local(_, _, href) -> option.unwrap(href, "")
     Web(_, _, href) -> option.unwrap(href, "")
   }
+}
+
+pub type Blog {
+  Blog(
+    title: String,
+    description: String,
+    image: String,
+    tags: List(String),
+    date: calendar.Date,
+    html: String,
+  )
 }

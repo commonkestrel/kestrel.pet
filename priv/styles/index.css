@@ -137,12 +137,15 @@ button:active {
     color: blue;
 }
 
-.center {
+.text-center {
     text-align: center;
 }
 
-.feeling {
-    overflow: hidden;
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .update {
@@ -257,7 +260,8 @@ button:active {
 
 .peek {
     position: relative;
-    transform: translateY(23.5%);
+    margin-bottom: -8.6%;
+    margin-top: 5%;
 }
 
 .badge {
@@ -331,14 +335,14 @@ button:active {
     
     .updates {
         width: 58%;
-        height: calc(0.37 * (100vh - 14rem));
-        max-height: calc(0.37 * (100vh - 14rem));
+        height: calc(0.35 * (100vh - 14rem));
+        max-height: calc(0.35 * (100vh - 14rem));
     }
 
     .people {
         width: 35%;
         height: 37%; 
-        max-height: calc(0.37 * (100vh - 14rem));
+        max-height: calc(0.35 * (100vh - 14rem));
     }
 }
 

@@ -12,6 +12,15 @@ timestamp = 2025-06-09T20:35:00Z
 content = "worker bee building a little website :3"
 timestamp = 2025-06-04T20:35:00Z
 
+# ---------------------- Blog posts -------------------------#
+[[blog]]
+title = "Caltrain AEM-7's"
+description = "Idiot sees train"
+file = "aem7.md"
+image = "aem7.jpg"
+tags = ["Trains", "Photography"]
+date = 2026-02-09
+
 # --------- All the buttons and blinkies are here! --------- #
 
 [[button]]
@@ -88,7 +97,7 @@ alt = "made with gnu/linux"
 
 [[button]]
 file = "estrogen.gif"
-href = "powered by estrogen"
+alt = "powered by estrogen"
 
 [[button]]
 file = "noai.gif"

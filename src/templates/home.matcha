@@ -65,7 +65,7 @@
             {% endfor %}
         </div>
         <div class="content-box people">
-            <h2 class="center">cool people and blinkies :0</h2>
+            <h2 class="text-center">cool people and blinkies :0</h2>
             <div class="divider"></div>
             {> import app/config.{type Button, type Blinkie}
             {> with buttons as List(Button)
@@ -73,7 +73,7 @@
             <div class="badges">
                 <div>
                     {% for button in buttons %}
-                        {% if config.has_href(button) %}<a class="center" href="{{ config.href(button) }}" target="_blank">{% endif %}
+                        {% if config.has_href(button) %}<a class="text-center" href="{{ config.href(button) }}" target="_blank">{% endif %}
                             <img class="badge button" {% if config.is_local(button) %}src="assets/badges/{{ config.source(button) }}"{% else %} src="{{ config.source(button) }}"{% endif %} alt="{{ config.alt(button) }}">
                         {% if config.has_href(button) %}</a>{% endif %}
                     {% endfor %}
@@ -84,21 +84,21 @@
                     {% endfor %}
                 </div>
             </div>
-            <h2 class="center">webrings :]</h2>
+            <h2 class="text-center">webrings :]</h2>
             <div class="divider"></div>
             <div class="center">
-                <script src="https://transring.neocities.org/ring.js"></script>
-                <script src="https://sitesforpalestine.neocities.org/ring.js"></script>
+                <script defer src="https://transring.neocities.org/ring.js"></script>
+                <script defer src="https://sitesforpalestine.neocities.org/ring.js"></script>
                 <div id='xenicRing'>
-                    <script type="text/javascript" src="https://xenics.neocities.org/onionring-variables.js"></script>
-                    <script type="text/javascript" src="https://xenics.neocities.org/onionring-widget.js"></script>
+                    <script defer type="text/javascript" src="https://xenics.neocities.org/onionring-variables.js"></script>
+                    <script defer type="text/javascript" src="https://xenics.neocities.org/onionring-widget.js"></script>
                     <link rel="stylesheet" href="https://xenics.neocities.org/onionring.css">
                 </div>
                 <div id='ncring'>
-                    <script type="text/javascript" src="https://neocreatives.neocities.org/onionring-variables.js"></script>
-                    <script type="text/javascript" src="https://neocreatives.neocities.org/onionring-widget.js"></script>
-                </div>  
-                <script defer src="https://fem.nz/ring/transfemring.js" data-widget="transgender"></script>
+                    <script defer type="text/javascript" src="https://neocreatives.neocities.org/onionring-variables.js"></script>
+                    <script defer type="text/javascript" src="https://neocreatives.neocities.org/onionring-widget.js"></script>
+                </div>
+                    <script defer src="https://fem.nz/ring/transfemring.js" data-widget="transgender"></script>
                 <map name="noaimini14b">
                     <area href="https://baccyflap.com/noai" shape="rect" coords="42,0,94,60" target="_blank" alt="no ai webring" title="no ai webring">
                     <area href="https://baccyflap.com/noai/?prv&s=kes" target="_top" shape="rect" coords="2,26,38,58" alt="previous" title="previous">
@@ -107,8 +107,8 @@
                 </map>
                 <img style="width:176px;image-rendering:pixelated" usemap="#noaimini14b" src="https://baccyflap.com/noai/miniwidget14.gif" alt="a bluegreen rectangle showing the words the NO AI webring, with NO AI being written by a fountain pen, all in the style of 16 bit Windows 95 icons. to either side are two equally Windows-95-style cursors pointing left and right, softly bouncing up and down. in between it all is a small black question mark">   
                 <div id='furryring'>
-                    <script type="text/javascript" src="https://furryring.neocities.org/onionring-variables.js"></script>
-                    <script type="text/javascript" src="https://furryring.neocities.org/onionring-widget.js"></script>
+                    <script defer type="text/javascript" src="https://furryring.neocities.org/onionring-variables.js"></script>
+                    <script defer type="text/javascript" src="https://furryring.neocities.org/onionring-widget.js"></script>
                 </div>      
             </div>
         </div>

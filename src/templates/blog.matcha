@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kestrel's corner</title>
+
+    <style>
+        body {
+            background-color: #06000c;
+        }
+    </style>
+
+    <link href="/styles/index.css" rel="preload" as="style">
+    <link href="/styles/blog.css" rel="preload" as="style">
+    <link href="/assets/images/background.png" rel="preload" as="image">
+    
+    <link href="/styles/index.css" rel="stylesheet">
+    <link href="/styles/blog.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Yantramanav:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://furryring.neocities.org/onionring.css">
+</head>
+<body>
+    {> import gleam/time/calendar
+    {> import gleam/int.{to_string}
+    {> import app/config.{type Blog}
+    {> with blog as Blog
+    <div class="blog">
+        <div class="header">
+            <img src="assets/images/{{ blog.image }}" />
+            <div>
+                <div class="tags">
+                    {% for tag in blog.tags %}
+                        <div class="tag">
+                            <p>{{ tag }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <h1 class="title">{{ blog.title }}</h1>
+                <p class="description">{{blog.description}}</p>
+                <time datetime="{{to_string(blog.date.year)}}-{{to_string(calendar.month_to_int(blog.date.month))}}-{{to_string(blog.date.day)}}">{{calendar.month_to_string(blog.date.month)}} {{to_string(blog.date.day)}}, {{to_string(blog.date.year)}}</p>
+            </div>
+        </div>
+        <div class="content">
+            {{ blog.html }}
+        </div>
+    </div>
+</body>
+</html>

@@ -5,6 +5,7 @@ import gleam/list
 import gleam/string
 import simplifile
 import templates/about
+import templates/blog
 import templates/home
 import wisp
 
@@ -32,6 +33,7 @@ pub fn middleware(
   use <- handle_visitors(req, ctx)
   use <- handle_404(req, ctx)
   use <- handle_hypertext(req, ctx)
+  use <- handle_blogs(req, ctx)
   use <- wisp.serve_static(req, "/", ctx.hypertext_directory)
   use <- handle_statics(req, ctx)
   use <- wisp.serve_static(req, "/assets", ctx.assets_directory)
@@ -65,6 +67,19 @@ fn handle_hypertext(
         home.render(ctx.config.updates, ctx.config.buttons, ctx.config.blinkies),
         200,
       )
+    _ -> next()
+  }
+}
+
+fn handle_blogs(
+  req: wisp.Request,
+  ctx: Context,
+  next: fn() -> wisp.Response,
+) -> wisp.Response {
+  let path = string.drop_start(req.path, 1)
+
+  case dict.get(ctx.config.blogs, path) {
+    Ok(blog) -> wisp.html_response(blog.render(blog), 200)
     _ -> next()
   }
 }

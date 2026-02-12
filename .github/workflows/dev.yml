@@ -1,8 +1,8 @@
-name: Deploy `main` branch
+name: Deploy `dev` branch
 on:
   push:
     branches:
-      - main
+      - dev
 jobs:
   build:
     name: Build
@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-            cd kestrel.pet
+            cd dev.kestrel.pet
             git pull
             /home/linuxbrew/.linuxbrew/bin/gleam export erlang-shipment
-            echo ${{ secrets.PASSWORD }} | sudo -S systemctl restart passerine.service
+            echo ${{ secrets.PASSWORD }} | sudo -S systemctl restart dev.passerine.service

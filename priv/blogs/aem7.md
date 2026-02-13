@@ -4,6 +4,8 @@ Recently, I've taken a large interest in the EMD AEM-7 locomotives,
 despite never having seen one in person.
 I live on the west coast, after all!
 
+![AEM-7AC #938 found in the Caltrain Maintinance Facility](/assets/images/aem7-downscaled.jpg)
+
 - 929 is still painted in its Amtrak Phase V livery, and is being used for parts.
 - 938 has been repainted with a *beautiful* Caltrain livery
 - 938 is attached to a single passenger car labeled **Caltrain PTC Safety Test Train**.

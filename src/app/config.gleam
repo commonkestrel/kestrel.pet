@@ -134,9 +134,9 @@ pub fn parse(toml: dict.Dict(String, tom.Toml), priv: String) -> Config {
         )
 
         use image <- try(
-          tom.get_string(blog, ["image"])
+          tom.get_string(blog, ["thumbnail"])
           |> map_error(fn(err) {
-            wisp.log_warning("blog found without image; skipping")
+            wisp.log_warning("blog found without thumbnail; skipping")
             err
           }),
         )

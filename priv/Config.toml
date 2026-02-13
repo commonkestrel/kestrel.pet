@@ -7,7 +7,7 @@ port = 8001
 title = "Caltrain AEM-7's"
 description = "Idiot sees train"
 file = "aem7.md"
-image = "aem7-downscaled.jpg"
+thumbnail = "aem7-thumbnail.jpg"
 tags = ["Trains", "Photography"]
 date = 2026-02-09
 

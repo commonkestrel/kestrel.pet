@@ -37,7 +37,12 @@
                 </div>
             </div>
         </div>
-        <button id="enter">enter!</button>
+        <button id="enter" style="display:none;">enter!</button>
+        <noscript>
+            <a href="/home.html">
+                <button>enter!</button>
+            </a>
+        </noscript>
         <div class="warning-scroll">
             <div class="warning">
                 <p>ooooh you wanna hear about trains soooo baddd</p>
@@ -68,6 +73,7 @@
             document.getElementById("modal").style.animation = "";
         })
         document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("enter").style.display = "block";
             document.getElementById("enter").addEventListener("click", (ev) => {
                 document.getElementById("modal").style.animation = "on 150ms ease-out reverse both";
                 setTimeout(() => document.location.href = "/home.html", 200);
